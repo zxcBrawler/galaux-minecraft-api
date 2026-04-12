@@ -7,7 +7,6 @@ use App\Models\Product;
 use App\Models\Server;
 use App\Services\ProductService;
 use Illuminate\Http\Request;
-use Illuminate\Http\JsonResponse;
 
 class ProductController extends Controller
 {

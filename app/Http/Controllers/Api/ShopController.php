@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Models\Server;
 use App\Services\ShopService;
-use Illuminate\Http\JsonResponse;
 
 class ShopController extends Controller
 {

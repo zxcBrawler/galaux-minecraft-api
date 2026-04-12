@@ -3,18 +3,22 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Interfaces\ServerInterface;
 use App\Models\Server;
-use App\Services\ServerService;
 use Illuminate\Http\Request;
 
 class ServerController extends Controller
 {
     public function __construct(
-        protected ServerService $serverService
+        protected ServerInterface $serverService
     ) {}
 
     public function getServers(Request $request)
     {
+        $request->validate([
+            'search' => 'nullable|string|max:255',
+            'page'   => 'nullable|integer|min:1',
+        ]);
         $servers = $this->serverService->getServerList(
             $request->query('search'),
             10

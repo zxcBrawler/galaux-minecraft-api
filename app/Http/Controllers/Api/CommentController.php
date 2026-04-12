@@ -7,7 +7,6 @@ use App\Models\Comment;
 use App\Models\Post;
 use App\Services\CommentService;
 use Illuminate\Http\Request;
-use Illuminate\Http\JsonResponse;
 
 class CommentController extends Controller
 {

@@ -2,6 +2,11 @@
 
 namespace App\Providers;
 
+use App\Interfaces\ServerInterface;
+use App\Models\Server;
+use App\Observers\ServerObserver;
+use App\Services\Cache\CachingServerService;
+use App\Services\ServerService;
 use Dedoc\Scramble\Scramble;
 use Dedoc\Scramble\Support\Generator\OpenApi;
 use Dedoc\Scramble\Support\Generator\SecurityScheme;
@@ -14,7 +19,10 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        //
+        $this->app->bind(ServerInterface::class, function () {
+            $baseService = new ServerService();
+            return new CachingServerService($baseService);
+        });
     }
 
     /**
@@ -28,5 +36,6 @@ class AppServiceProvider extends ServiceProvider
                     SecurityScheme::http('bearer')
                 );
             });
+        Server::observe(ServerObserver::class);
     }
 }
