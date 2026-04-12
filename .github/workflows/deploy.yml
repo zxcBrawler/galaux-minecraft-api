@@ -22,16 +22,19 @@ jobs:
           passphrase: ${{ secrets.SSH_PASSPHRASE }}
           script: |
             cd ~/www/galauxminecraftapi.ru/
+
+            php artisan down || true
+
             git reset --hard
             git pull origin main
 
-            # composer install --no-dev --optimize-autoloader --no-interaction
+            composer install --no-dev --optimize-autoloader --no-interaction
 
             php artisan migrate --force
 
             php artisan optimize:clear
-
             php artisan config:cache
             php artisan route:cache
+            php artisan view:cache
 
-            # php artisan scramble:export
+            php artisan up
