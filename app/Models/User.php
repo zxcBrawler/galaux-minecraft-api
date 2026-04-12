@@ -12,7 +12,8 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Carbon;
-use Laravel\Sanctum\HasApiTokens;
+use Illuminate\Support\Facades\Hash;
+use Laravel\Passport\HasApiTokens;
 use Illuminate\Notifications\Notifiable;
 
 /**
@@ -139,5 +140,15 @@ class User extends Authenticatable
             ->where('user_id', $this->id_user)
             ->where('role', ServerRole::OWNER)
             ->exists();
+    }
+
+    public function findForPassport($username)
+    {
+        return $this->where('login', $username)->orWhere('email', $username)->first();
+    }
+
+    public function validateForPassportPasswordGrant($password): bool
+    {
+        return Hash::check($password, $this->password_hash);
     }
 }

@@ -11,6 +11,7 @@ use Dedoc\Scramble\Scramble;
 use Dedoc\Scramble\Support\Generator\OpenApi;
 use Dedoc\Scramble\Support\Generator\SecurityScheme;
 use Illuminate\Support\ServiceProvider;
+use Laravel\Passport\Passport;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -37,5 +38,8 @@ class AppServiceProvider extends ServiceProvider
                 );
             });
         Server::observe(ServerObserver::class);
+        Passport::enablePasswordGrant();
+        Passport::tokensExpireIn(now()->addHours(1));
+        Passport::refreshTokensExpireIn(now()->addDays(30));
     }
 }

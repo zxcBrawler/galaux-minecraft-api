@@ -53,8 +53,23 @@ class AuthController extends Controller
         } catch (AuthenticationException $e) {
             return response()->json(['message' => $e->getMessage()], 401);
         } catch (ValidationException $e) {
-            return response()->json(['message' => $e->getMessage()], 403);
+            return response()->json([
+                'message' => 'Ошибка валидации',
+                'errors'  => $e->errors()
+            ], 403);
         }
+    }
+    /**
+     *
+     * @unauthenticated
+     */
+    public function refresh(Request $request)
+    {
+        $request->validate([
+            'refresh_token' => 'required|string',
+        ]);
+        $result = $this->authService->refreshToken($request->refresh_token);
+        return response()->json($result);
     }
     public function logout(Request $request)
     {
