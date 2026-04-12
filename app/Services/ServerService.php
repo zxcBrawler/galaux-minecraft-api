@@ -26,11 +26,16 @@ class ServerService implements ServerInterface
         return $query->latest()->paginate($perPage);
     }
 
-    public function getServerById(Server $server): Server
+    public function getServerById($id_server): Server
     {
-        return $server->load([
-            'owner:id_user,name,login', 'tags', 'images', 'shop', 'mods', 'members.user:id_user,name'
-        ]);
+        return Server::with([
+            'owner:id_user,name,login',
+            'tags',
+            'images',
+            'shop',
+            'mods',
+            'members.user:id_user,name'
+        ])->findOrFail($id_server);
     }
 
     public function createServer(array $data, User $owner): Server

@@ -19,7 +19,7 @@ class CachingServerService implements ServerInterface
         $cacheKey = "servers_list_" . md5("s_{$searchTerm}_p_{$page}_pp_{$perPage}");
 
         $data = Cache::remember($cacheKey, 3600, function () use ($searchTerm, $perPage) {
-            \Illuminate\Support\Facades\Log::info("Кэш пуст, получения данных из базы");
+            \Illuminate\Support\Facades\Log::info("Кэш пуст, получение данных из базы");
             $paginator = $this->baseService->getServerList($searchTerm, $perPage);
             return [
                 'items' => $paginator->getCollection()->toArray(),
@@ -35,12 +35,13 @@ class CachingServerService implements ServerInterface
         );
     }
 
-    public function getServerById(Server $server): Server
+    public function getServerById($id_server): Server
     {
-        $cacheKey = "server_show_{$server->id_server}";
+        $cacheKey = "server_show_{$id_server}";
 
-        $attributes = Cache::remember($cacheKey, 3600, function () use ($server) {
-            return $this->baseService->getServerById($server)->toArray();
+        $attributes = Cache::remember($cacheKey, 3600, function () use ($id_server) {
+            \Illuminate\Support\Facades\Log::info("Кэш пуст, получение данных из базы");
+            return $this->baseService->getServerById($id_server)->toArray();
         });
 
         return new Server()->forceFill($attributes);

@@ -27,7 +27,7 @@ class ServerController extends Controller
         return response()->json($servers);
     }
 
-    public function getServer(Server $id_server)
+    public function getServer($id_server)
     {
         $fullServer = $this->serverService->getServerById($id_server);
         return response()->json($fullServer);
