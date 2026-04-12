@@ -28,8 +28,6 @@ jobs:
             git reset --hard
             git pull origin main
 
-            /usr/local/bin/composer install --no-dev --optimize-autoloader --no-interaction
-
             php artisan migrate --force
 
             php artisan optimize:clear
