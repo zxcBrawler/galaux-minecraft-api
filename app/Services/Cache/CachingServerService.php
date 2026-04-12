@@ -19,6 +19,7 @@ class CachingServerService implements ServerInterface
         $cacheKey = "servers_list_" . md5("s_{$searchTerm}_p_{$page}_pp_{$perPage}");
 
         $data = Cache::remember($cacheKey, 3600, function () use ($searchTerm, $perPage) {
+            \Illuminate\Support\Facades\Log::info("Кэш пуст, получения данных из базы");
             $paginator = $this->baseService->getServerList($searchTerm, $perPage);
             return [
                 'items' => $paginator->getCollection()->toArray(),
