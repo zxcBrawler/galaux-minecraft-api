@@ -1,7 +1,6 @@
 <?php
 
-use App\Http\Controllers\Api\{
-    AuthController,
+use App\Http\Controllers\Api\{AuthController,
     ServerMemberController,
     UserController,
     ServerController,
@@ -12,13 +11,16 @@ use App\Http\Controllers\Api\{
     PostController,
     CommentController,
     LikeController,
-    UserActionController
-};
+    UserActionController,
+    SocialAuthController};
 use Illuminate\Support\Facades\Route;
 
 Route::post('/login', [AuthController::class, 'login'])->name('login');
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/refresh', [AuthController::class, 'refresh']);
+
+Route::get('/auth/{provider}/redirect', [SocialAuthController::class, 'redirectToProvider']);
+Route::get('/auth/{provider}/callback', [SocialAuthController::class, 'handleProviderCallback']);
 
 Route::middleware('auth:api')->group(function () {
 

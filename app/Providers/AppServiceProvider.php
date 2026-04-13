@@ -10,8 +10,12 @@ use App\Services\ServerService;
 use Dedoc\Scramble\Scramble;
 use Dedoc\Scramble\Support\Generator\OpenApi;
 use Dedoc\Scramble\Support\Generator\SecurityScheme;
+use Illuminate\Support\Facades\Event;
 use Illuminate\Support\ServiceProvider;
 use Laravel\Passport\Passport;
+use SocialiteProviders\Manager\SocialiteWasCalled;
+use SocialiteProviders\VKontakte\VKontakteExtendSocialite;
+use SocialiteProviders\Yandex\YandexExtendSocialite;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -41,5 +45,7 @@ class AppServiceProvider extends ServiceProvider
         Passport::enablePasswordGrant();
         Passport::tokensExpireIn(now()->addHours(1));
         Passport::refreshTokensExpireIn(now()->addDays(30));
+        Event::listen(SocialiteWasCalled::class, [YandexExtendSocialite::class, 'handle']);
+        Event::listen(SocialiteWasCalled::class, [VkontakteExtendSocialite::class, 'handle']);
     }
 }

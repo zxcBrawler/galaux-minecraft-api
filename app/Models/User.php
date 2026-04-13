@@ -34,6 +34,8 @@ use Illuminate\Notifications\Notifiable;
  * @property array|null $parent_settings json
  * @property bool $is_private
  * @property int $parent_id
+ * @property string $yandex_id
+ * @property string $vkontakte_id
  * @property Carbon|null $last_seen
  * @method static Builder|User query()
  */
@@ -69,6 +71,8 @@ class User extends Authenticatable
         'who_can_message',
         'last_seen',
         'is_quiet_mode',
+        'yandex_id',
+        'vkontakte_id',
     ];
 
     protected $hidden = [

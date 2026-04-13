@@ -12,7 +12,10 @@
         "laravel/passport": "^13.7",
         "laravel/reverb": "^1.0",
         "laravel/sanctum": "^4.0",
-        "laravel/tinker": "^3.0"
+        "laravel/socialite": "^5.26",
+        "laravel/tinker": "^3.0",
+        "socialiteproviders/vkontakte": "^5.1",
+        "socialiteproviders/yandex": "^4.1"
     },
     "require-dev": {
         "barryvdh/laravel-ide-helper": "^3.7",
