@@ -14,7 +14,7 @@ class SocialAuthController extends Controller
      */
     public function redirectToProvider(string $provider)
     {
-        if (!in_array($provider, ['yandex', 'vkontakte'])) {
+        if (!in_array($provider, ['yandex', 'vkid'])) {
             return response()->json(['error' => 'Провайдер не поддерживается'], 400);
         }
 
@@ -28,7 +28,6 @@ class SocialAuthController extends Controller
     {
         try {
             $socialUser = Socialite::driver($provider)->stateless()->user();
-
             $idField = $provider . '_id';
 
             $user = User::where($idField, $socialUser->getId())->first();

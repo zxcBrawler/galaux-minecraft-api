@@ -13,15 +13,17 @@ use App\Http\Controllers\Api\{AuthController,
     LikeController,
     UserActionController,
     SocialAuthController};
+use Illuminate\Session\Middleware\StartSession;
 use Illuminate\Support\Facades\Route;
 
 Route::post('/login', [AuthController::class, 'login'])->name('login');
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/refresh', [AuthController::class, 'refresh']);
 
-Route::get('/auth/{provider}/redirect', [SocialAuthController::class, 'redirectToProvider']);
-Route::get('/auth/{provider}/callback', [SocialAuthController::class, 'handleProviderCallback']);
-
+Route::middleware([StartSession::class])->group(function () {
+    Route::get('auth/{provider}/redirect', [SocialAuthController::class, 'redirectToProvider']);
+    Route::get('auth/{provider}/callback', [SocialAuthController::class, 'handleProviderCallback']);
+});
 Route::middleware('auth:api')->group(function () {
 
     Route::post('/logout', [AuthController::class, 'logout']);

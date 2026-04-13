@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Event;
 use Illuminate\Support\ServiceProvider;
 use Laravel\Passport\Passport;
 use SocialiteProviders\Manager\SocialiteWasCalled;
-use SocialiteProviders\VKontakte\VKontakteExtendSocialite;
+use SocialiteProviders\VKID\VKIDExtendSocialite;
 use SocialiteProviders\Yandex\YandexExtendSocialite;
 
 class AppServiceProvider extends ServiceProvider
@@ -46,7 +46,7 @@ class AppServiceProvider extends ServiceProvider
         Passport::tokensExpireIn(now()->addHours(1));
         Passport::refreshTokensExpireIn(now()->addDays(30));
         Event::listen(SocialiteWasCalled::class, [YandexExtendSocialite::class, 'handle']);
-        Event::listen(SocialiteWasCalled::class, [VkontakteExtendSocialite::class, 'handle']);
+        Event::listen(SocialiteWasCalled::class, [VKIDExtendSocialite::class, 'handle']);
         \URL::forceScheme('https');
     }
 }
