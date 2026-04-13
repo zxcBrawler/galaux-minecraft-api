@@ -47,5 +47,6 @@ class AppServiceProvider extends ServiceProvider
         Passport::refreshTokensExpireIn(now()->addDays(30));
         Event::listen(SocialiteWasCalled::class, [YandexExtendSocialite::class, 'handle']);
         Event::listen(SocialiteWasCalled::class, [VkontakteExtendSocialite::class, 'handle']);
+        \URL::forceScheme('https');
     }
 }
