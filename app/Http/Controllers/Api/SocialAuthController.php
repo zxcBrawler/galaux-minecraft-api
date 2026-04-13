@@ -48,6 +48,7 @@ class SocialAuthController extends Controller
                     'login' => $socialUser->getNickname() ?? explode('@', $socialUser->getEmail())[0],
                     $idField => $socialUser->getId(),
                     'password_hash' => bcrypt(Str::random(24)),
+                    'uuid' => Str::uuid()->toString(),
                 ]);
             }
 
