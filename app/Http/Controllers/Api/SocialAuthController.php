@@ -60,6 +60,11 @@ class SocialAuthController extends Controller
             ]);
 
         } catch (\Exception $e) {
+            \Log::error("VK Auth Error: " . $e->getMessage());
+            if (method_exists($e, 'hasResponse') && $e->hasResponse()) {
+                $responseBody = $e->getResponse()->getBody()->getContents();
+                \Log::error("VK Detailed Response: " . $responseBody);
+            }
             return response()->json([
                 'status' => 'error',
                 'message' => 'Ошибка авторизации: ' . $e->getMessage()
