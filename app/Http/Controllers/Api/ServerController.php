@@ -13,6 +13,10 @@ class ServerController extends Controller
         protected ServerInterface $serverService
     ) {}
 
+    /**
+     *
+     * @unauthenticated
+     */
     public function getServers(Request $request)
     {
         $request->validate([
@@ -27,6 +31,10 @@ class ServerController extends Controller
         return response()->json($servers);
     }
 
+    /**
+     *
+     * @unauthenticated
+     */
     public function getServer($id_server)
     {
         $fullServer = $this->serverService->getServerById($id_server);

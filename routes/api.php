@@ -24,6 +24,11 @@ Route::middleware([StartSession::class])->group(function () {
     Route::get('auth/{provider}/redirect', [SocialAuthController::class, 'redirectToProvider']);
     Route::get('auth/{provider}/callback', [SocialAuthController::class, 'handleProviderCallback']);
 });
+
+Route::prefix('servers')->group(function () {
+    Route::get('/', [ServerController::class, 'getServers']);
+    Route::get('/{id_server}', [ServerController::class, 'getServer']);
+});
 Route::middleware('auth:api')->group(function () {
 
     Route::post('/logout', [AuthController::class, 'logout']);
@@ -54,8 +59,6 @@ Route::middleware('auth:api')->group(function () {
     });
 
     Route::prefix('servers')->group(function () {
-        Route::get('/', [ServerController::class, 'getServers']);
-        Route::get('/{id_server}', [ServerController::class, 'getServer']);
         Route::post('/', [ServerController::class, 'createServer']);
         Route::put('/{id_server}', [ServerController::class, 'updateServer']);
         Route::delete('/{id_server}', [ServerController::class, 'deleteServer']);

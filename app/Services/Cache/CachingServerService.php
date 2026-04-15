@@ -44,7 +44,7 @@ class CachingServerService implements ServerInterface
             return $this->baseService->getServerById($id_server)->toArray();
         });
 
-        return new Server()->forceFill($attributes);
+        return (new Server())->forceFill($attributes);
     }
 
     public function createServer(array $data, User $owner): Server
